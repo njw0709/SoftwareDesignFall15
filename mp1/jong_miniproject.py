@@ -24,6 +24,8 @@ def save_url(pages):
 			else:
 				listurl[title]=url[j].split("/1/")
 		i = i+1
+		# defining a counter variable like i and incrementing it in a while loop is generally a good
+		# indicator that a for loop might be more appropriate
 	return listurl
 
 ## saves all the chapters of each fan fiction from url dictionary. Returns 
@@ -33,6 +35,7 @@ def save_text(urldict,chaptnum):
 	errorstr2 = "Story Not Found"
 	for title,url in urldict.iteritems():
 		chapter = 1
+		# if you're also checking chapter <= chaptnum, there's no reason to and it with True, it doesn't do anything
 		while True and chapter <= chaptnum:
 				s = URL("https://www.fanfiction.net"+url[0]+"/"+str(chapter)+"/"+url[1],"utf-8").download()
 				if errorstr1 in s or errorstr2 in s:
@@ -53,6 +56,8 @@ def save_text(urldict,chaptnum):
 ## prints either list or dictionary of fanfictions in readable format
 def print_text(fanfic_dic):
 	while True:
+		# if you have break statements in all paths in the this loop, there
+		# doesn't seem to be a need for it to be within a while loop at all
 		try:	
 			for title in fanfic_dic:
 				textline = fanfic_dic[title].split("\n\n")
@@ -75,6 +80,7 @@ def delete_empty_list(textline):
 		blank_instance = 0
 		if textline[i]=='':
 			blank_instance=blank_instance+1
+		# no need for this empty else statement - every if doesn't necessarily need an else too
 		else:
 			pass
 
