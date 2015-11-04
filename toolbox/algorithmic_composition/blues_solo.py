@@ -33,7 +33,6 @@ beats_per_minute = 45				# Let's make a slow blues solo
 
 # add_note(solo, bass, blues_scale[0], 1.0, beats_per_minute, 1.0)
 
-# solo >> "blues_solo.wav"
 
 curr_note = 3
 add_note(solo, bass, blues_scale[curr_note], 0.5, beats_per_minute, 3.0)
@@ -47,3 +46,5 @@ for i in range(4):
         curr_note += note[0]
         add_note(solo, bass, blues_scale[curr_note], note[1]*swing[j%2], beats_per_minute, 3.0)
         j+=1
+
+solo >> "blues_solo.wav"
