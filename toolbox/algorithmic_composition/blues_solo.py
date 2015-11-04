@@ -47,16 +47,3 @@ for i in range(4):
         curr_note += note[0]
         add_note(solo, bass, blues_scale[curr_note], note[1]*swing[j%2], beats_per_minute, 3.0)
         j+=1
-
-backing_track = AudioStream(sampling_rate, 1)
-Wavefile.read('backing.wav', backing_track)
-
-m = Mixer()
-
-solo *= 0.4             # adjust relative volumes to taste
-backing_track *= 2.0
-
-m.add(2.25, 0, solo)    # delay the solo to match up with backing track    
-m.add(0, 0, backing_track)
-
-m.getStream(500.0) >> "slow_blues.wav"
