@@ -13,9 +13,12 @@ from PIL import Image
 #Funtion that randomly chooses a list among ["prod"], ["sin_pi"], and ["cos_pi"]
 #takes no input
 #output:list e.g ["prod","a","b"]
+
+functiondic={1:["prod","a","b"],2:["sin_pi","a"],3:["cos_pi","a"]}
+funcdic_eval={1:'prod',2:'sin_pi',3:'cos_pi',4:'x',5:'y'}
+
 def print_random_function():
-    integ = randint(1,3)
-    functiondic={1:["prod","a","b"],2:["sin_pi","a"],3:["cos_pi","a"]};
+    integ = randint(1,3)    
     return functiondic[integ]
 
 
@@ -24,36 +27,30 @@ def print_random_function():
 #output: nested list of minimum depth of min_depth and maximum depth of max_depth. 
 #All nested list will have at least min_depth but will not always reach to max_depth(random) 
 def build_random_function(min_depth, max_depth):
-
-    functiondic={1:["prod","a","b"],2:["sin_pi","a"],3:["cos_pi","a"]};
     if min_depth>1 and max_depth>=min_depth: #recursively calls itself when min_depth>1 and max_depth>=min_depth
-
-        funclist=print_random_function();
+        funclist=print_random_function()
         if funclist==functiondic[1]:
-            funclist[1]=build_random_function(min_depth-1,max_depth-1);#recursively calls itself with decremented min/max_depth
-            funclist[2]=build_random_function(min_depth-1,max_depth-1);
-        elif funclist==functiondic[2]:
-            funclist[1]=build_random_function(min_depth-1,max_depth-1);
-        elif funclist==functiondic[3]:
-            funclist[1]=build_random_function(min_depth-1,max_depth-1);
+            funclist[1]=build_random_function(min_depth-1,max_depth-1)#recursively calls itself with decremented min/max_depth
+            funclist[2]=build_random_function(min_depth-1,max_depth-1)
+        elif funclist==functiondic[2] or funclist == functiondic[3]:
+            funclist[1]=build_random_function(min_depth-1,max_depth-1)
         else:
             print("Error Occured - random function generator broke")
         return funclist
     elif min_depth==1 and max_depth>=2: #when min_depth reached 1, randomly choose depth that goes beyond min_depth if max_depth>=2
-        max_depth=randint(2,max_depth);
-        funclist=print_random_function();
+        max_depth=randint(2,max_depth)
+        funclist=print_random_function()
         if funclist==functiondic[1]:
-            funclist[1]=build_random_function(min_depth,max_depth-1);
-            funclist[2]=build_random_function(min_depth,max_depth-1);
-        elif funclist==functiondic[2]:
-            funclist[1]=build_random_function(min_depth,max_depth-1);
-        elif funclist==functiondic[3]:
-            funclist[1]=build_random_function(min_depth,max_depth-1);
+            funclist[1]=build_random_function(1,max_depth-1)
+            funclist[2]=build_random_function(1,max_depth-1)
+        elif funclist==functiondic[2] or funclist == functiondic[3]:
+            funclist[1]=build_random_function(1,max_depth-1)
         else:
             print("Error Occured - random function generator broke")
         return funclist
-    elif min_depth==1 and max_depth==1: #when both min_depth and max_depth = 1, returns ["x"] or ["y"] randomly
-        returndic={1:["x"],2:["y"]};
+    elif min_depth==1 and max_depth<=1: #when both min_depth and max_depth = 1, returns ["x"] or ["y"] randomly
+        returndic={1:["x"],2:["y"]}
+        print "reached maximum"
         return returndic[randint(1,2)]
     elif max_depth<min_depth: #prints error when max_depth<min_depth
         print "Max_depth has to be bigger than min_depth"
@@ -67,24 +64,23 @@ def build_random_function(min_depth, max_depth):
 def evaluate_random_function(f, x, y):
     """ this funciton recursively goes down the nested list to evaluate function f.
     """
-    funcdic={1:'prod',2:'sin_pi',3:'cos_pi',4:'x',5:'y'};
-    if f[0]==funcdic[1]:
-        a=evaluate_random_function(f[1],x,y);
-        b=evaluate_random_function(f[2],x,y);
+    if f[0]==funcdic_eval[1]:
+        a=evaluate_random_function(f[1],x,y)
+        b=evaluate_random_function(f[2],x,y)
         # print a*b
         return a*b
-    elif f[0]==funcdic[2]:
-        a=evaluate_random_function(f[1],x,y);
+    elif f[0]==funcdic_eval[2]:
+        a=evaluate_random_function(f[1],x,y)
         # print sin(pi*a)
         return sin(pi*a)
-    elif f[0]==funcdic[3]:
-        a=evaluate_random_function(f[1],x,y);
+    elif f[0]==funcdic_eval[3]:
+        a=evaluate_random_function(f[1],x,y)
         # print cos(pi*a)
         return cos(pi*a)
-    elif f[0]==funcdic[4]:
+    elif f[0]==funcdic_eval[4]:
         # print x
         return x
-    elif f[0]==funcdic[5]:
+    elif f[0]==funcdic_eval[5]:
         # print y
         return y
 
@@ -101,11 +97,11 @@ def remap_interval(val, input_interval_start, input_interval_end, output_interva
     # your code goes here
     if input_interval_start<=val<=input_interval_end:
         val=float(val)
-        inputdist=input_interval_end-input_interval_start;
-        dist_from_start_input = val-input_interval_start;
-        ratio = dist_from_start_input/inputdist;
-        outputdist = output_interval_end - output_interval_start;
-        remap_val = ratio*outputdist + output_interval_start;
+        inputdist=input_interval_end-input_interval_start
+        dist_from_start_input = val-input_interval_start
+        ratio = dist_from_start_input/inputdist
+        outputdist = output_interval_end - output_interval_start
+        remap_val = ratio*outputdist + output_interval_start
         return remap_val
     else:
         print "input value not within the specified input range"
